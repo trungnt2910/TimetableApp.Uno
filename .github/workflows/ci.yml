@@ -1,0 +1,37 @@
+name: 'Publish application'
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+        # Checkout the code
+        - uses: actions/checkout@v2
+
+        # Install .NET Core SDK
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 5.0.x
+
+        # Run tests
+        # - name: Test
+        #  run: dotnet test
+
+        # Generate the website
+        - name: Publish
+          run: dotnet publish TimetableApp/TimetableApp.Wasm/TimetableApp.Wasm.csproj --configuration Release
+
+        # Publish the website
+        - name: GitHub Pages action
+          if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
+          uses: peaceiris/actions-gh-pages@v3.6.1
+          with:
+            github_token: ${{ secrets.PUBLISH_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: TimetableApp/TimetableApp.Wasm/bin/Release/netstandard2.0/publish
+            allow_empty_commit: false
+            keep_files: false
+            force_orphan: true
+            # TODO uncomment the following line if you have a custom domain name
+            # cname: demo.meziantou.net

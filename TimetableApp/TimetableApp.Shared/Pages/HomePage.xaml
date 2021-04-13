@@ -1,0 +1,134 @@
+﻿<Page
+    x:Class="TimetableApp.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimetableApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wct="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:TimetableApp.UI"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Pivot>
+        <PivotItem Header="Main">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Grid.Row="0">
+                    <TextBox x:Name="textBox1"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Top"
+                             PlaceholderText="Display name..."
+                             Text="{x:Bind ViewModel.DisplayName, Mode=TwoWay}"/>
+                    <TextBlock FontWeight="Bold"
+                               Style="{StaticResource TitleTextBlockStyle}"
+                               Text="{x:Bind ViewModel.DisplayText, Mode=OneWay}"
+                               HorizontalTextAlignment="Center"/>
+                    <TextBlock x:Name="LessonInfoBlock"
+                               ui:MarkdownTextRenderer.MarkdownText="{x:Bind ViewModel.LessonInfoText, Mode=OneWay}">
+                    </TextBlock>
+                    <TextBlock x:Name="LessonInfo"/>
+                </StackPanel>
+                <Button x:Name="JoinButton"
+                        Grid.Row="1"
+                        Content="Join!"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        IsEnabled="{x:Bind ViewModel.JoinButtonIsEnabled, Mode=OneWay}"
+                        Click="JoinButton_Click"/>
+            </Grid>
+        </PivotItem>
+        <PivotItem Header="Today">
+            <wct:DataGrid x:Name="TodayDataGrid"
+                          AutoGenerateColumns="False"
+                          CanUserReorderColumns="False"
+                          CanUserSortColumns="False"
+                          IsReadOnly="True"
+                          RightTapped="DataGrid_RightTapped"
+                          ItemsSource="{x:Bind ViewModel.TodayLessons, Mode=OneWay}">
+                <wct:DataGrid.Columns>
+                    <wct:DataGridTextColumn 
+                        Header="Subject" 
+                        Width="Auto"
+                        FontSize="11" 
+                        Binding="{Binding Subject}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Teacher Name" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding TeacherName}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Start Time" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding StartTime}"/>
+                    <wct:DataGridTextColumn 
+                        Header="End Time" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding EndTime}"/>
+                    <wct:DataGridTextColumn 
+                        Header="OneClick" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding SupportsOneClick}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Credentials" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding Credentials}"/>
+                </wct:DataGrid.Columns>
+            </wct:DataGrid>
+        </PivotItem>
+        <PivotItem Header="This week">
+            <wct:DataGrid x:Name="ThisWeekDataGrid"
+                          AutoGenerateColumns="False"
+                          CanUserReorderColumns="False"
+                          CanUserSortColumns="False"
+                          IsReadOnly="True"
+                          LoadingRowGroup="ThisWeekDataGrid_LoadingRowGroup" 
+                          RightTapped="DataGrid_RightTapped"
+                          ItemsSource="{x:Bind ViewModel.WeekLessons.View, Mode=OneWay}">
+                <wct:DataGrid.Columns>
+                    <wct:DataGridTextColumn 
+                        Header="Subject" 
+                        Width="Auto"
+                        FontSize="11" 
+                        Binding="{Binding Subject}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Teacher Name" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding TeacherName}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Start Time" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding StartTime}"/>
+                    <wct:DataGridTextColumn 
+                        Header="End Time" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding EndTime}"/>
+                    <wct:DataGridTextColumn 
+                        Header="OneClick" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding SupportsOneClick}"/>
+                    <wct:DataGridTextColumn 
+                        Header="Credentials" 
+                        Width="Auto"
+                        FontSize="11"
+                        Binding="{Binding Credentials}"/>
+                </wct:DataGrid.Columns>
+            </wct:DataGrid>
+        </PivotItem>
+    </Pivot>
+
+</Page>

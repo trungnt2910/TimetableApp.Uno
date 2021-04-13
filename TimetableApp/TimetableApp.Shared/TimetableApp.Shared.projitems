@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6279c845-92f8-4333-ab99-3d213163593c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>TimetableApp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BindableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Data.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\ICredentials.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Lesson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\PlatformHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\StudentInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Timetable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\UpdateResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Zoom\ZoomCredentials.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Zoom\ZoomStudentInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseAllowEntryBeforeTimeDialog.xaml.cs">
+      <DependentUpon>ChooseAllowEntryBeforeTimeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseReportBeforeTimeDialog.xaml.cs">
+      <DependentUpon>ChooseReportBeforeTimeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\LoadNewTimetableDialog.xaml.cs">
+      <DependentUpon>LoadNewTimetableDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\ThreadPoolTimer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\TimerDestroyedHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\TimerElapsedHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\WorkItemHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\WorkItemOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hacks\System.Threading\WorkItemPriority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Clipboard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ContextMenuStrip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Markdown.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\MarkdownTextRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\MarkdownToHtml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ToolStripItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ToolStripItemCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ToolStripMenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ToolStripMenuItemClickedCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ToolStripSeparator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomePageViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\ChooseAllowEntryBeforeTimeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\ChooseReportBeforeTimeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\LoadNewTimetableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Hacks\README.txt" />
+  </ItemGroup>
+</Project>

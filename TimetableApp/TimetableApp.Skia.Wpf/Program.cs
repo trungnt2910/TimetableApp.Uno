@@ -1,0 +1,4 @@
+﻿
+namespace TimetableApp.Skia.Gtk
+{
+}

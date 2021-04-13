@@ -1,0 +1,19 @@
+﻿<ContentDialog
+    x:Class="TimetableApp.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimetableApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="About"
+    PrimaryButtonText="OK"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <StackPanel>
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Timetable"/>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Copyright (C) 2021 Trung Nguyen"/>
+        <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+            <Span xml:space="preserve"><Run>This program is free software, covered by the terms of the </Run><Hyperlink NavigateUri="https://github.com/trungnt2910/RootLicense/blob/master/LICENSE.md">Root License</Hyperlink><Run>.</Run></Span>
+        </TextBlock> 
+        <TextBlock Style="{StaticResource BodyTextBlockStyle}" FontWeight="Bold" Text="This program is provided &quot;AS-IS&quot;, without warranties of any kind, expressed or implied. You use this program AT YOUR OWN RISK."/>
+    </StackPanel>
+</ContentDialog>
