@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TimetableApp.Core;
@@ -21,26 +17,34 @@ namespace TimetableApp.ViewModels
     public class HomePageViewModel : BindableBase
     {
         private const string NoClasses = "**HOORAY! NO CLASSES!**";
-        private ThreadPoolTimer periodicTimer; 
+        private ThreadPoolTimer periodicTimer;
         private Task periodicTask;
         private CancellationTokenSource periodicTaskCancellationTokenSource = new CancellationTokenSource();
         private DateTime lastCheck = DateTime.Now;
         private Lesson currentLesson;
         private Lesson nextLesson;
 
-#region Settings
+        #region Settings
         private bool doAutoJoin = false;
         private string displayName;
         public string DisplayName
         {
-            get => displayName;
+            get => Settings.UserName;
             set
             {
+                System.Diagnostics.Debug.WriteLine(displayName);
+                Settings.UserName = value;
                 SetProperty(ref displayName, value);
             }
         }
-        private TimeSpan? reportBeforeTime;
-        private TimeSpan? allowJoinBeforeTime;
+        private TimeSpan? ReportBeforeTime
+        {
+            get => Settings.AlwaysReport ? null : (TimeSpan?)Settings.ReportBeforeTime;
+        }
+        private TimeSpan? AllowJoinBeforeTime
+        {
+            get => Settings.AlwaysAllowJoin ? null : (TimeSpan?)Settings.AllowJoinBeforeTime;
+        }
 #endregion
 #region Properites
         private string displayText = "Your next lesson";
@@ -99,7 +103,7 @@ namespace TimetableApp.ViewModels
 
             if (currentLesson == null)
             {   
-                nextLesson = Data.Timetable.GetNextLesson(reportBeforeTime);
+                nextLesson = Data.Timetable.GetNextLesson(ReportBeforeTime);
                 await RunOnMainThreadAsync(() => DisplayText = "Your next lesson");
             }
             else
@@ -110,7 +114,7 @@ namespace TimetableApp.ViewModels
             await RunOnMainThreadAsync(() =>
             {
                 LessonInfoText = currentLesson?.ToMarkdown() ?? (nextLesson?.ToMarkdown() ?? NoClasses);
-                JoinButtonIsEnabled = (currentLesson != null) || (nextLesson != null && Data.Timetable.CheckNextLesson(allowJoinBeforeTime));
+                JoinButtonIsEnabled = (currentLesson != null) || (nextLesson != null && Data.Timetable.CheckNextLesson(AllowJoinBeforeTime));
             });
 
             if (lastCheck.DayOfYear != currentCheck.DayOfYear)

@@ -23,6 +23,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\ICredentials.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Lesson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\PlatformHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SettingBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\StudentInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Timetable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\UpdateResponse.cs" />

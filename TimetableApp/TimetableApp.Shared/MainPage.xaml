@@ -22,7 +22,7 @@
                                      SelectsOnInvoked="False">
                 <muxc:NavigationViewItem.MenuItems>
                     <muxc:NavigationViewItem x:Name="AutoJoin"
-                                             Icon="{x:Bind CheckboxIcon}"
+                                             Icon="{x:Bind AutoJoinButtonIcon, Mode=OneWay}"
                                              Content="AutoJoin"
                                              Tapped="AutoJoin_Tapped"
                                              SelectsOnInvoked="False"/>

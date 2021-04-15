@@ -37,6 +37,7 @@ namespace TimetableApp.Dialogs
 				if (value != null)
                 {
 					var timeSpan = value.Value;
+					CheckBox.IsChecked = false;
 					Picker.IsEnabled = true;
 					HourPicker.SelectedIndex = timeSpan.Hours;
 					MinutePicker.SelectedIndex = timeSpan.Minutes;
@@ -44,6 +45,7 @@ namespace TimetableApp.Dialogs
 				}
 				else
                 {
+					CheckBox.IsChecked = true;
 					Picker.IsEnabled = false;
                 }
 			}

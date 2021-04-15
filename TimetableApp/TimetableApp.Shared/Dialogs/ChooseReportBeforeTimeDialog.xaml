@@ -12,7 +12,7 @@
 
     <StackPanel>
         <CheckBox x:Name="CheckBox"
-                  Content="Always allow joining next lesson"
+                  Content="Always report next lesson"
                   Checked="CheckBox_Checked"
                   Unchecked="CheckBox_Unchecked"/>
         <ContentControl x:Name="Picker">

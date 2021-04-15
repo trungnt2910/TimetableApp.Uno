@@ -39,10 +39,15 @@ namespace TimetableApp
     {
         public readonly FontIcon CheckboxIcon = new FontIcon() { FontFamily = (FontFamily)Application.Current.Resources["SymbolThemeFontFamily"], Glyph = "\uF16B" };
         public readonly FontIcon CheckboxCompositeIcon = new FontIcon() { FontFamily = (FontFamily)Application.Current.Resources["SymbolThemeFontFamily"], Glyph = "\uF16C" };
+
+        public FontIcon AutoJoinButtonIcon
+        {
+            get => TimetableApp.Core.Settings.AutoJoin ? CheckboxCompositeIcon : CheckboxIcon;
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
-            AutoJoin.Icon = CheckboxIcon;
             ContentFrame.Navigate(typeof(HomePage));
         }
 
@@ -51,19 +56,42 @@ namespace TimetableApp
         {
             //Toggles the Check icon.
             var item = sender as Microsoft.UI.Xaml.Controls.NavigationViewItem;
-            item.Icon = (item.Icon == CheckboxIcon) ? CheckboxCompositeIcon : CheckboxIcon;
+            TimetableApp.Core.Settings.AutoJoin = !TimetableApp.Core.Settings.AutoJoin;
+            item.Icon = TimetableApp.Core.Settings.AutoJoin ? CheckboxCompositeIcon : CheckboxIcon;
         }
 
         private async void ChooseAllowEntryBeforeTime_Tapped(object sender, TappedRoutedEventArgs args)
         {
             var dialog = new ChooseAllowEntryBeforeTimeDialog();
+            dialog.DisplaySpan = (TimetableApp.Core.Settings.AlwaysAllowJoin) ? null : (TimeSpan?)TimetableApp.Core.Settings.AllowJoinBeforeTime;
             await dialog.ShowAsync();
+            if (!dialog.UserResponded) return;
+            if (dialog.Result == null)
+            {
+                TimetableApp.Core.Settings.AlwaysAllowJoin = true;
+            }
+            else
+            {
+                TimetableApp.Core.Settings.AlwaysAllowJoin = false;
+                TimetableApp.Core.Settings.AllowJoinBeforeTime = dialog.Result.Value;
+            }
         }
 
         private async void ChooseReportBeforeTime_Tapped(object sender, TappedRoutedEventArgs args)
         {
             var dialog = new ChooseReportBeforeTimeDialog();
+            dialog.DisplaySpan = (TimetableApp.Core.Settings.AlwaysReport) ? null : (TimeSpan?)TimetableApp.Core.Settings.ReportBeforeTime;
             await dialog.ShowAsync();
+            if (!dialog.UserResponded) return;
+            if (dialog.Result == null)
+            {
+                TimetableApp.Core.Settings.AlwaysReport = true;
+            }
+            else
+            {
+                TimetableApp.Core.Settings.AlwaysReport = false;
+                TimetableApp.Core.Settings.ReportBeforeTime = dialog.Result.Value;
+            }
         }
 
         private async void Load_Tapped(object sender, TappedRoutedEventArgs args)
