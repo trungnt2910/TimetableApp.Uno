@@ -17,7 +17,6 @@ namespace TimetableApp.Core
     {
         #region Private values
         private static readonly int DaysInAWeek = System.Globalization.DateTimeFormatInfo.CurrentInfo.DayNames.Length;
-        private static StorageFolder DataFolder = null;
         private static string DataFilePath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "TimetableAppData", "data.json");
         #endregion
 
@@ -180,10 +179,49 @@ namespace TimetableApp.Core
             }
         }   
 
+        private async Task ReloadAsync()
+        {
+            await ApplicationData.Current.LocalFolder.CreateFolderAsync("TimetableAppData", CreationCollisionOption.OpenIfExists);
+            try
+            {
+                using (var stream = File.OpenText(DataFilePath))
+                {
+                    var newTimetable = (Timetable)JsonConvert.DeserializeObject(stream.ReadToEnd().Replace("$ASSEMBLY_NAME", Assembly.GetExecutingAssembly().GetName().Name), typeof(Timetable),
+                        new JsonSerializerSettings()
+                        {
+                            TypeNameHandling = TypeNameHandling.Auto
+                        });
+                    if (newTimetable != null)
+                    {
+                        Name = newTimetable.Name;
+                        UpdateURL = newTimetable.UpdateURL;
+                        Lessons = newTimetable.Lessons;
+                        OnSucessfulUpdate?.Invoke(this, null);
+                    }
+                    else
+                    {
+                        await SaveAsync();
+                    }
+                }
+            }
+            catch
+            {
+                await SaveAsync();
+            }
+
+        }
+
         public static Timetable Load()
         {
             try
             {
+                // File system has not been initialized yet.
+                if (PlatformHelper.RuntimePlatform == Platform.WASM)
+                {
+                    var timetable = new Timetable();
+                    timetable.ReloadAsync();
+                    return timetable;
+                }
                 using (var stream = File.OpenText(DataFilePath))
                 {
                     var timetable = (Timetable)JsonConvert.DeserializeObject(stream.ReadToEnd().Replace("$ASSEMBLY_NAME", Assembly.GetExecutingAssembly().GetName().Name), typeof(Timetable),
