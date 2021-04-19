@@ -18,7 +18,6 @@
     <UpToDateCheckInput Include="..\TimetableApp.Shared\**\*.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="WasmScripts\WasmLooper.js" />
     <None Remove="WasmScripts\WasmWebClient.js" />
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +49,6 @@
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WasmScripts\WasmLooper.js" />
     <EmbeddedResource Include="WasmScripts\WasmWebClient.js" />
   </ItemGroup>
   <Import Project="..\TimetableApp.Shared\TimetableApp.Shared.projitems" Label="Shared" Condition="Exists('..\TimetableApp.Shared\TimetableApp.Shared.projitems')" />
