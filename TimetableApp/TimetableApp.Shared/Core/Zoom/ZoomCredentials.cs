@@ -92,7 +92,10 @@ namespace TimetableApp.Core.Zoom
 
             System.Diagnostics.Debug.WriteLine(link);
 
-            Launcher.LaunchUriAsync(new Uri(link));
+            Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                Launcher.LaunchUriAsync(new Uri(link));
+            });
         }
 
         public override string ToString()

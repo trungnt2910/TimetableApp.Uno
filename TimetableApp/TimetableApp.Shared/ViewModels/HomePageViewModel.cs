@@ -25,7 +25,7 @@ namespace TimetableApp.ViewModels
         private Lesson nextLesson;
 
         #region Settings
-        private bool doAutoJoin = false;
+        private bool DoAutoJoin => Settings.AutoJoin;
         private string displayName;
         public string DisplayName
         {
@@ -45,8 +45,8 @@ namespace TimetableApp.ViewModels
         {
             get => Settings.AlwaysAllowJoin ? null : (TimeSpan?)Settings.AllowJoinBeforeTime;
         }
-#endregion
-#region Properites
+        #endregion
+        #region Properites
         private string displayText = "Your next lesson";
         public string DisplayText
         {
@@ -77,7 +77,7 @@ namespace TimetableApp.ViewModels
             get => weekLessons;
             set => SetProperty(ref weekLessons, value);
         }
-#endregion
+        #endregion
 
         public HomePageViewModel()
         {
@@ -129,7 +129,7 @@ namespace TimetableApp.ViewModels
             if (currentLesson != newLesson)
             {
                 currentLesson = newLesson;
-                if (doAutoJoin) AutoJoin();
+                if (DoAutoJoin) AutoJoin();
             }
         }
 
