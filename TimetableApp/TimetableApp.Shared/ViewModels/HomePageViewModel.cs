@@ -3,11 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using TimetableApp.Core;
-#if !HAS_UNO
 using Windows.System.Threading;
-#else
-using TimetableApp.Hacks.System.Threading;
-#endif
 using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
 

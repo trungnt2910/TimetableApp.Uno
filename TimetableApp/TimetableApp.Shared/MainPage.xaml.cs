@@ -23,13 +23,6 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-
-#if !HAS_UNO
-using Windows.System.Threading;
-#else
-using TimetableApp.Hacks.System.Threading;
-#endif
-
 namespace TimetableApp
 {
     /// <summary>
