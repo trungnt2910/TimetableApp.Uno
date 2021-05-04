@@ -208,8 +208,14 @@ namespace TimetableApp.Core
             {
                 await SaveAsync();
             }
-
+            finally
+            {
+                Loaded?.Invoke(this, EventArgs.Empty);
+            }
         }
+
+        // On some targets where Load must be async...
+        public event EventHandler Loaded;
 
         public static Timetable Load()
         {
