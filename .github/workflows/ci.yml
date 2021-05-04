@@ -1,8 +1,9 @@
-name: 'Publish application'
-on: push
+name: 'Build and publish application'
+on: [push, pull_request]
 
 jobs:
   build:
+    name: Build app (WebAssembly)
     runs-on: windows-latest
     steps:
         # Checkout the code
