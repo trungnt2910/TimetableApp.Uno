@@ -131,7 +131,7 @@ namespace TimetableApp
 
         private async void BugReport_Tapped(object sender, TappedRoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/trungnt2910/TimetableUno/issues"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/AzureAms/TimetableApp.Uno/issues"));
         }
         #endregion
 
