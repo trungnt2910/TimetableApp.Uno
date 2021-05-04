@@ -8,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -89,6 +90,30 @@ namespace TimetableApp
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+#if __WASM__
+                    // Feature: Directly share timetable links!
+                    if (!string.IsNullOrWhiteSpace(e.Arguments))
+                    {
+                        var parameters = System.Web.HttpUtility.ParseQueryString(e.Arguments);
+                        var location = parameters.Get("location");
+                        if (!string.IsNullOrWhiteSpace(location))
+                        {
+                            async void TimetableLoaded(object sender, EventArgs args)
+                            {
+                                var oldLocation = Core.Data.Timetable.UpdateURL;
+                                Core.Data.Timetable.UpdateURL = location;
+                                bool succeeded = await Core.Data.Timetable.UpdateAsync();
+                                var dialog = new MessageDialog(
+                                    succeeded ? $"Timetable successfully loaded from {location}" : "Timetable load failed.",
+                                    "Load timetable");
+                                if (!succeeded) Core.Data.Timetable.UpdateURL = oldLocation;
+                                await dialog.ShowAsync();
+                            };
+                            Core.Data.Timetable.Loaded += TimetableLoaded;
+                        }
+                    }
+#endif
                 }
                 // Ensure the current window is active
                 window.Activate();
