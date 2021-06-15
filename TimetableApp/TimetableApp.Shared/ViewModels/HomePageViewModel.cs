@@ -6,6 +6,8 @@ using TimetableApp.Core;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
+using Uno.Extras;
+
 
 namespace TimetableApp.ViewModels
 {
@@ -104,6 +106,8 @@ namespace TimetableApp.ViewModels
             }
             else
             {
+                
+                
                 await RunOnMainThreadAsync(() => DisplayText = "Your current lesson");
             }
 
@@ -122,10 +126,21 @@ namespace TimetableApp.ViewModels
 
         private void SetCurrentLesson(Lesson newLesson)
         {
-            if (currentLesson != newLesson)
+            
+            if (currentLesson != newLesson) 
             {
+                
                 currentLesson = newLesson;
                 if (DoAutoJoin) AutoJoin();
+                if (currentLesson != null)
+                {
+                    var notification = new ToastNotification();
+                    notification.Title = "New Lesson";
+                    notification.Message = $"Next Lesson: {currentLesson.Subject} start on {currentLesson.StartTime}";
+                    notification.Show();
+                }
+                    
+                
             }
         }
 
@@ -137,6 +152,8 @@ namespace TimetableApp.ViewModels
                 currentLesson.Credentials.EnterClass(new StudentInfo() { Name = DisplayName });
             }
         }
+
+        
 
         public void ReloadToday()
         {
