@@ -105,9 +105,7 @@ namespace TimetableApp.ViewModels
                 await RunOnMainThreadAsync(() => DisplayText = "Your next lesson");
             }
             else
-            {
-                
-                
+            {               
                 await RunOnMainThreadAsync(() => DisplayText = "Your current lesson");
             }
 
@@ -126,21 +124,17 @@ namespace TimetableApp.ViewModels
 
         private void SetCurrentLesson(Lesson newLesson)
         {
-            
             if (currentLesson != newLesson) 
             {
-                
                 currentLesson = newLesson;
                 if (DoAutoJoin) AutoJoin();
                 if (currentLesson != null)
                 {
                     var notification = new ToastNotification();
                     notification.Title = "New Lesson";
-                    notification.Message = $"Next Lesson: {currentLesson.Subject} start on {currentLesson.StartTime}";
+                    notification.Message = $"Lesson {currentLesson.Subject} has started on {currentLesson.StartTime}";
                     notification.Show();
                 }
-                    
-                
             }
         }
 
@@ -152,8 +146,6 @@ namespace TimetableApp.ViewModels
                 currentLesson.Credentials.EnterClass(new StudentInfo() { Name = DisplayName });
             }
         }
-
-        
 
         public void ReloadToday()
         {
