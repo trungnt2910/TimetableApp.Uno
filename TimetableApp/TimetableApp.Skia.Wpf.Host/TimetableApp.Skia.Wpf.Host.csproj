@@ -7,7 +7,6 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ToastNotification.Uno.Wpf" Version="0.0.0-preview-18-835992017" />
     <PackageReference Include="Uno.UI.Skia.Wpf" Version="3.7.3" />
     <PackageReference Include="Uno.UI.RemoteControl" Version="3.7.3" Condition="'$(Configuration)'=='Debug'" />
   </ItemGroup>
