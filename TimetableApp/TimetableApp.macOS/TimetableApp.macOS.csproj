@@ -61,6 +61,9 @@
     <Reference Include="System.Memory" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ToastNotification.Uno">
+      <Version>0.0.0-preview-18-835992017</Version>
+    </PackageReference>
     <PackageReference Include="Uno.UI" Version="3.6.6" />
     <PackageReference Include="Uno.UI.RemoteControl" Version="3.6.6" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
