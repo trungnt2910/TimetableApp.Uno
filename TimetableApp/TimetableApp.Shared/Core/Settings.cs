@@ -59,7 +59,7 @@ namespace TimetableApp.Core
                 }
             }
 
-            var newSetting = new Setting<T>() { Value = defaultValue };
+            var newSetting = new Setting<T> { Value = defaultValue };
             newSetting.Key = key;
             newSetting.ValueChanged += UpdateSetting;
             var json = JsonConvert.SerializeObject(newSetting as SettingBase, JsonOptions);
@@ -99,7 +99,7 @@ namespace TimetableApp.Core
             {
                 try
                 {
-                    var obj = JsonConvert.DeserializeObject<SettingBase>(kvp.Value as string, JsonOptions);
+                    _ = JsonConvert.DeserializeObject<SettingBase>(kvp.Value as string, JsonOptions);
                 }
                 catch (Exception e)
                 {
