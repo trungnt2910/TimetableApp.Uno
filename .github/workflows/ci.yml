@@ -30,7 +30,7 @@ jobs:
           with:
             github_token: ${{ secrets.PUBLISH_TOKEN }}
             publish_branch: gh-pages
-            publish_dir: TimetableApp/TimetableApp.Wasm/bin/Release/netstandard2.0/publish
+            publish_dir: TimetableApp/TimetableApp.Wasm/bin/Release/net5.0/publish
             allow_empty_commit: false
             keep_files: false
             force_orphan: true
