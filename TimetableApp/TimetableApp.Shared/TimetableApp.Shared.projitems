@@ -34,14 +34,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dialogs\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseAllowEntryBeforeTimeDialog.xaml.cs">
-      <DependentUpon>ChooseAllowEntryBeforeTimeDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseReportBeforeTimeDialog.xaml.cs">
-      <DependentUpon>ChooseReportBeforeTimeDialog.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseAllowEntryBeforeTimeDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\ChooseReportBeforeTimeDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dialogs\LoadNewTimetableDialog.xaml.cs">
       <DependentUpon>LoadNewTimetableDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\TimeSpanPickerContentDialog.xaml.cs">
+      <DependentUpon>TimeSpanPickerContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -67,15 +66,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Dialogs\ChooseAllowEntryBeforeTimeDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Dialogs\ChooseReportBeforeTimeDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Dialogs\LoadNewTimetableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\TimeSpanPickerContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
