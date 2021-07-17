@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Windows.Storage;
-
+using Windows.Foundation.Collections;
 
 namespace TimetableApp.Core
 {
@@ -20,6 +20,8 @@ namespace TimetableApp.Core
         {
             try
             {
+                CleanInvalidSettings(Local.Values);
+                CleanInvalidSettings(Roaming.Values);
                 // Some platforms don't support enumerating Settings.
                 SyncSettings();
             }
@@ -41,24 +43,30 @@ namespace TimetableApp.Core
         {
             if (Local.Values.ContainsKey(key))
             {
-                var setting = JsonConvert.DeserializeObject<Setting<T>>(Local.Values[key] as string, JsonOptions);
-                System.Diagnostics.Debug.WriteLine(key);
-                System.Diagnostics.Debug.WriteLine(Local.Values[key]);
-                setting.Key = key;
-                setting.ValueChanged += UpdateSetting;
-                return setting;
+                try
+                {
+                    var setting = JsonConvert.DeserializeObject<Setting<T>>(Local.Values[key] as string, JsonOptions);
+                    System.Diagnostics.Debug.WriteLine(key);
+                    System.Diagnostics.Debug.WriteLine(Local.Values[key]);
+                    setting.Key = key;
+                    setting.ValueChanged += UpdateSetting;
+                    return setting;
+                }
+                catch (JsonSerializationException)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Failed to deserialize setting: {key}. Using default value.");
+                    Local.Values.Remove(key);
+                }
             }
-            else
-            {
-                var setting = new Setting<T>() { Value = defaultValue };
-                setting.Key = key;
-                setting.ValueChanged += UpdateSetting;
-                var json = JsonConvert.SerializeObject(setting as SettingBase, JsonOptions);
-                Local.Values.Add(key, json);
-                if (!Roaming.Values.ContainsKey(key))
-                    Roaming.Values.Add(key, json);
-                return setting;
-            }
+
+            var newSetting = new Setting<T>() { Value = defaultValue };
+            newSetting.Key = key;
+            newSetting.ValueChanged += UpdateSetting;
+            var json = JsonConvert.SerializeObject(newSetting as SettingBase, JsonOptions);
+            Local.Values.Add(key, json);
+            if (!Roaming.Values.ContainsKey(key))
+                Roaming.Values.Add(key, json);
+            return newSetting;
         }
 
         private static void SyncSettings()
@@ -81,6 +89,27 @@ namespace TimetableApp.Core
             foreach (var kvp in Local.Values)
             {
                 Roaming.Values.Add(kvp);
+            }
+        }
+
+        private static void CleanInvalidSettings(IPropertySet properties)
+        {
+            var toRemove = new List<string>();
+            foreach (var kvp in properties)
+            {
+                try
+                {
+                    var obj = JsonConvert.DeserializeObject<SettingBase>(kvp.Value as string, JsonOptions);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Failed to deserialize setting: {kvp.Key}: {e.GetType()}: {e.Message}");
+                    toRemove.Add(kvp.Key);
+                }
+            }
+            foreach (var r in toRemove)
+            {
+                properties.Remove(r);
             }
         }
 
