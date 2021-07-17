@@ -6,6 +6,7 @@ namespace TimetableApp.Core
     public class UpdateResponse
     {
         public string MD5;
+        public string SHA512;
         public string Location;
     }
 }

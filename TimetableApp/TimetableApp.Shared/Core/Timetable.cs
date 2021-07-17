@@ -9,6 +9,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+#if __WASM__
+using WebClient = TimetableApp.Core.WasmWebClient;
+#endif
 
 namespace TimetableApp.Core
 {
@@ -100,42 +103,36 @@ namespace TimetableApp.Core
 
             try
             {
-                string oldMd5;
-                string newMd5;
+                string oldSha512;
+                string newSha512;
 
                 Timetable newTimetable = null;
 
                 using (var localFile = File.OpenRead(DataFilePath))
                 {
-                    var hasher = MD5.Create();
+                    var hasher = SHA512.Create();
                     var hash = hasher.ComputeHash(localFile);
-                    oldMd5 = string.Concat(hash.Select(x => x.ToString("X2")));
+                    oldSha512 = string.Concat(hash.Select(x => x.ToString("X2")));
                 }
 
                 using (var client = new WebClient())
                 {
-#if !__WASM__
                     byte[] data = await client.DownloadDataTaskAsync(UpdateURL);
-#else
-                    byte[] data = await WasmWebClient.DownloadDataTaskAsync(UpdateURL);
-#endif
+
                     using (var stream = new MemoryStream(data))
                     using (var sr = new StreamReader(stream))
                     {
                         var response = (UpdateResponse)JsonConvert.DeserializeObject(sr.ReadToEnd(), typeof(UpdateResponse));
-                        newMd5 = response.MD5;
+                        newSha512 = response.SHA512;
 
-                        if (string.Compare(oldMd5, newMd5, true) != 0)
+                        if (string.Compare(oldSha512, newSha512, true) != 0)
                         {
-#if !__WASM__
                             data = await client.DownloadDataTaskAsync(response.Location);
-#else
-                            data = await WasmWebClient.DownloadDataTaskAsync(response.Location);
-#endif
-                            var hash = MD5.Create().ComputeHash(data);
+
+                            var hash = SHA512.Create().ComputeHash(data);
 
                             var hashString = string.Concat(hash.Select(x => x.ToString("X2")));
-                            if (string.Compare(newMd5, hashString, true) != 0)
+                            if (string.Compare(newSha512, hashString, true) != 0)
                             {
                                 return false;
                             }
@@ -174,6 +171,7 @@ namespace TimetableApp.Core
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
+                Console.WriteLine(e.ToString());
                 //throw;
                 return false;
             }

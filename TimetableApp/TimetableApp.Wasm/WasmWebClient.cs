@@ -7,7 +7,7 @@ using Uno.Foundation;
 
 namespace TimetableApp.Core
 {
-    public static class WasmWebClient
+    public class WasmWebClient : IDisposable
     {
         public static async Task FetchNoCors(string url)
         {
@@ -41,7 +41,7 @@ namespace TimetableApp.Core
             return HexStringToByte(result);
         }
 
-        public static async Task<byte[]> DownloadDataTaskAsync(string url)
+        public async Task<byte[]> DownloadDataTaskAsync(string url)
         {
             var result = await WebAssemblyRuntime.InvokeAsync($@"FetchToBuffer('{WebAssemblyRuntime.EscapeJs(url)}')");
             long[] ints = result.Split(',').Select(x => long.Parse(x)).ToArray();
@@ -80,6 +80,11 @@ namespace TimetableApp.Core
             //return val - (val < 58 ? 48 : 87);
             //Or the two combined, but a bit slower:
             return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
+        }
+
+        public void Dispose()
+        {
+            // no-op
         }
     }
 }
