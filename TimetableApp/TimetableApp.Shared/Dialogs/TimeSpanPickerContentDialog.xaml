@@ -1,10 +1,10 @@
 ﻿<ContentDialog
-    x:Class="TimetableApp.Dialogs.ChooseAllowEntryBeforeTimeDialog"
+    x:Class="TimetableApp.Dialogs.TimeSpanPickerContentDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TimetableApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="How early should we allow you to join the next lesson?"
+    Title="TITLE"
     PrimaryButtonText="OK"
     SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
@@ -12,7 +12,7 @@
 
     <StackPanel>
         <CheckBox x:Name="CheckBox"
-                  Content="Always allow joining next lesson"
+                  Content="ALWAYS"
                   Checked="CheckBox_Checked"
                   Unchecked="CheckBox_Unchecked"/>
         <ContentControl x:Name="Picker">

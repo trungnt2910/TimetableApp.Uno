@@ -1,42 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+
+// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TimetableApp.Dialogs
 {
-	public sealed partial class ChooseAllowEntryBeforeTimeDialog : ContentDialog
-	{
+    public partial class TimeSpanPickerContentDialog : ContentDialog
+    {
 		public TimeSpan? Result
 		{
 			get => DisplaySpan;
 		}
 
 		public TimeSpan? DisplaySpan
-        {
+		{
 			get
-            {
+			{
 				if (Picker.IsEnabled)
 				{
 					return new TimeSpan(HourPicker.SelectedIndex, MinutePicker.SelectedIndex, SecondPicker.SelectedIndex);
 				}
 				else return null;
-            }
+			}
 			set
 			{
 				if (value != null)
-                {
+				{
 					var timeSpan = value.Value;
 					CheckBox.IsChecked = false;
 					Picker.IsEnabled = true;
@@ -45,12 +37,12 @@ namespace TimetableApp.Dialogs
 					SecondPicker.SelectedIndex = timeSpan.Seconds;
 				}
 				else
-                {
+				{
 					CheckBox.IsChecked = true;
 					Picker.IsEnabled = false;
-                }
+				}
 			}
-        }
+		}
 
 		public bool UserResponded { get; private set; } = false;
 
@@ -58,7 +50,7 @@ namespace TimetableApp.Dialogs
 		public ObservableCollection<int> MinutePickerItems { get; private set; }
 		public ObservableCollection<int> SecondPickerItems { get; private set; }
 
-		public ChooseAllowEntryBeforeTimeDialog()
+		public TimeSpanPickerContentDialog(string title, string checkBoxText)
 		{
 			this.InitializeComponent();
 
@@ -72,6 +64,9 @@ namespace TimetableApp.Dialogs
 			HourPicker.SelectedIndex = 0;
 			MinutePicker.SelectedIndex = 0;
 			SecondPicker.SelectedIndex = 0;
+
+			Title = title;
+			CheckBox.Content = checkBoxText;
 		}
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -86,13 +81,13 @@ namespace TimetableApp.Dialogs
 		}
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs args)
-        {
+		{
 			Picker.IsEnabled = false;
-        }
+		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs args)
-        {
+		{
 			Picker.IsEnabled = true;
-        }
+		}
 	}
 }
