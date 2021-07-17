@@ -19,15 +19,15 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <TextBlock Text="Hours"/>
-                    <ComboBox x:Name="HourPicker"/>
+                    <ComboBox x:Name="HourPicker" ItemsSource="{x:Bind HourPickerItems}"/>
                 </StackPanel>
                 <StackPanel>
                     <TextBlock Text="Minutes"/>
-                    <ComboBox x:Name="MinutePicker"/>
+                    <ComboBox x:Name="MinutePicker" ItemsSource="{x:Bind MinutePickerItems}"/>
                 </StackPanel>
                 <StackPanel>
                     <TextBlock Text="Seconds"/>
-                    <ComboBox x:Name="SecondPicker"/>
+                    <ComboBox x:Name="SecondPicker" ItemsSource="{x:Bind SecondPickerItems}"/>
                 </StackPanel>
             </StackPanel>
         </ContentControl>

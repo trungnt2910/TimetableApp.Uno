@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -53,6 +54,10 @@ namespace TimetableApp.Dialogs
 
 		public bool UserResponded { get; private set; } = false;
 
+		public ObservableCollection<int> HourPickerItems { get; private set; }
+		public ObservableCollection<int> MinutePickerItems { get; private set; }
+		public ObservableCollection<int> SecondPickerItems { get; private set; }
+
 		public ChooseReportBeforeTimeDialog()
 		{
 			this.InitializeComponent();
@@ -60,9 +65,9 @@ namespace TimetableApp.Dialogs
 			CheckBox.IsChecked = true;
 			Picker.IsEnabled = false;
 
-			AddRange(HourPicker.Items, 0, 168);
-			AddRange(MinutePicker.Items, 0, 60);
-			AddRange(SecondPicker.Items, 0, 60);
+			HourPickerItems = new ObservableCollection<int>(Enumerable.Range(0, 168));
+			MinutePickerItems = new ObservableCollection<int>(Enumerable.Range(0, 60));
+			SecondPickerItems = new ObservableCollection<int>(Enumerable.Range(0, 60));
 
 			HourPicker.SelectedIndex = 0;
 			MinutePicker.SelectedIndex = 0;
@@ -78,14 +83,6 @@ namespace TimetableApp.Dialogs
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			Hide();
-		}
-
-		private void AddRange(ItemCollection col, int begin, int end)
-		{
-			for (int i = begin; i < end; ++i)
-			{
-				col.Add(i);
-			}
 		}
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs args)
