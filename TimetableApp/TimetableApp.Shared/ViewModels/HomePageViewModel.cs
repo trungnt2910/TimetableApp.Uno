@@ -7,7 +7,9 @@ using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
 using Uno.Extras;
-
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json;
 
 namespace TimetableApp.ViewModels
 {
@@ -130,9 +132,19 @@ namespace TimetableApp.ViewModels
                 if (DoAutoJoin) AutoJoin();
                 if (currentLesson != null)
                 {
+                    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+                    var JsonString = JsonConvert.SerializeObject(currentLesson, settings);
                     var notification = new ToastNotification();
                     notification.Title = "New Lesson";
                     notification.Message = $"Lesson {currentLesson.Subject} has started on {currentLesson.StartTime}";
+                    notification.AddButton(new ToastButton()
+                        .SetContent("Join")
+                        .AddArgument("lesson", JsonString)
+                        );
+                    notification.AddButton(new ToastButton()
+                        .SetContent("Dismiss")
+                        .SetDismissActivation()
+                        );
                     notification.Show();
                 }
             }
@@ -196,5 +208,25 @@ namespace TimetableApp.ViewModels
                 currentLesson.EnterClass(info);
             }
         }
+        //protected void OnActivated(IActivatedEventArgs e)
+        //{
+        //    Console.WriteLine("Received signal.");
+        //    Console.WriteLine(e.GetType().FullName);
+        //    if (e.GetType() == typeof(ToastNotificationActivatedEventArgs))
+        //    {
+        //        Console.WriteLine(e is ToastNotificationActivatedEventArgs);
+        //        var toastActivationArgs = (ToastNotificationActivatedEventArgs)e;
+        //        ToastArguments args = ToastArguments.Parse(toastActivationArgs.Argument);
+
+        //        var shouldPlay = args.Contains("ShouldPlay") ? Convert.ToBoolean(int.Parse(args["ShouldPlay"])) : false;
+
+        //        var contentDialog = new ContentDialog();
+        //        contentDialog.Content = shouldPlay ? "Have a nice day!" : "Hello from Toast!";
+        //        contentDialog.PrimaryButtonText = "Close";
+
+        //        _ = contentDialog.ShowAsync();
+        //    }
+        //}
+        
     }
 }

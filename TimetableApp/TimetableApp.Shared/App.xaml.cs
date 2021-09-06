@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json;
+using TimetableApp.Core;
+using Windows.UI.Notifications;
+using Uno.Extras;
 
 namespace TimetableApp
 {
@@ -198,6 +202,20 @@ namespace TimetableApp
             });
 
             global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
+        }
+        
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            if (e.GetType() == typeof(ToastNotificationActivatedEventArgs))
+            {
+                Console.WriteLine(e is ToastNotificationActivatedEventArgs);
+                var toastActivationArgs = (ToastNotificationActivatedEventArgs)e;
+                ToastArguments args = ToastArguments.Parse(toastActivationArgs.Argument);
+
+                var JsonString = args.Contains("lesson") ? args["lesson"] : null;
+                var lesson = JsonConvert.DeserializeObject<Lesson>(JsonString);
+                lesson.EnterClass(new StudentInfo() { Name = Settings.UserName });
+            }
         }
     }
 }
