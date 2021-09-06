@@ -213,8 +213,13 @@ namespace TimetableApp
                 ToastArguments args = ToastArguments.Parse(toastActivationArgs.Argument);
 
                 var JsonString = args.Contains("lesson") ? args["lesson"] : null;
-                var lesson = JsonConvert.DeserializeObject<Lesson>(JsonString);
-                lesson.EnterClass(new StudentInfo() { Name = Settings.UserName });
+                if (JsonString != null)
+                {
+                    var lesson = JsonConvert.DeserializeObject<Lesson>(JsonString, 
+                        new JsonSerializerSettings() 
+                        { TypeNameHandling = TypeNameHandling.Auto });
+                    lesson.EnterClass(new StudentInfo() { Name = Settings.UserName });
+                }
             }
         }
     }
