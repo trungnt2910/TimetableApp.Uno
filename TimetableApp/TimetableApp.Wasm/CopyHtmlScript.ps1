@@ -1,2 +1,6 @@
-$s = Get-ChildItem -Name -Directory bin\Release\net5.0\publish\package*;
-Copy-Item .\package_index.html (".\bin\Release\net5.0\publish\" + $s + "\index.html")
+# Fix for Github Pages. Local builds do not need this fix.
+
+$s = Get-ChildItem -Name -Directory ($PSScriptRoot + "\bin\Release\net5.0\publish\package*"); 
+$htmlFile = $PSScriptRoot + "\bin\Release\net5.0\publish\" + $s + "\index.html";
+echo ("Copying file to " + $PSScriptRoot + $htmlFile);
+Copy-Item ($PSScriptRoot + "\package_index.html") $htmlFile
