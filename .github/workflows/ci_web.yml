@@ -1,4 +1,4 @@
-name: 'Build and publish application'
+name: 'Build and publish web application'
 on: [push, pull_request]
 
 jobs:
@@ -22,6 +22,9 @@ jobs:
         # Generate the website
         - name: Publish
           run: dotnet publish TimetableApp/TimetableApp.Wasm/TimetableApp.Wasm.csproj --configuration Release
+
+        - name: Fix ToastNotification error
+          run: ./TimetableApp/TimetableApp.Wasm/CopyHtmlScript.ps1
 
         # Publish the website
         - name: GitHub Pages action
