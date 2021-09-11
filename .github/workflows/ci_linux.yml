@@ -60,7 +60,7 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: TimetableApp.Skia.Gtk.Standalone.x64
-            path: TimetableApp/TimetableApp.Skia.Gtk/bin/Release/net5.0/linux-x64/publish/TimetableApp.Skia.Gtk.exe
+            path: TimetableApp/TimetableApp.Skia.Gtk/bin/Release/net5.0/linux-x64/publish/**
 
         # - name: Publish self-contained (x86)
         #   run: dotnet publish TimetableApp/TimetableApp.Skia.Gtk/TimetableApp.Skia.Gtk.csproj --configuration Release -p:PublishSingleFile=true -r linux-x86
@@ -78,6 +78,6 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: TimetableApp.Skia.Gtk.SelfContained.x64
-            path: TimetableApp/TimetableApp.Skia.Gtk/bin/Release/net5.0/linux-x64/publish/TimetableApp.Skia.Gtk.exe
+            path: TimetableApp/TimetableApp.Skia.Gtk/bin/Release/net5.0/linux-x64/publish/**
 
         # To-Do: Publish snap?
