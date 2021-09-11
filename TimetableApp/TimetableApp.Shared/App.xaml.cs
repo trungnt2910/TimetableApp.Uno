@@ -107,9 +107,10 @@ namespace TimetableApp
                             {
                                 var oldLocation = Core.Data.Timetable.UpdateURL;
                                 Core.Data.Timetable.UpdateURL = location;
-                                bool succeeded = await Core.Data.Timetable.UpdateAsync();
+                                var status = await Core.Data.Timetable.UpdateAsync();
+                                var succeeded = status == null;
                                 var dialog = new MessageDialog(
-                                    succeeded ? $"Timetable successfully loaded from {location}" : "Timetable load failed.",
+                                    succeeded ? $"Timetable successfully loaded from {location}" : $"Timetable load failed: {status}",
                                     "Load timetable");
                                 if (!succeeded) Core.Data.Timetable.UpdateURL = oldLocation;
                                 await dialog.ShowAsync();
