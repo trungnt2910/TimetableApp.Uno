@@ -21,6 +21,11 @@ on:
 
 jobs:
   build:
+
+    env:
+      BUILD_CONFIG: 'Release'
+      PACKAGE_NAME: com.azureams.TimetableApp
+
     name: Build app (Android)
     runs-on: macos-latest
 
@@ -44,29 +49,29 @@ jobs:
     - name: Publish arm64 APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp-arm64-v8a.apk
-        path: TimetableApp/TimetableApp.Droid/bin/Release/*arm64-v8a-Signed.apk
+        name: ${{ env.PACKAGE_NAME }}-arm64-v8a.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/${{ env.PACKAGE_NAME }}-arm64-v8a-Signed.apk
 
     - name: Publish arm APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp-armeabi-v7a.apk
-        path: TimetableApp/TimetableApp.Droid/bin/Release/*armeabi-v7a-Signed.apk
+        name: ${{ env.PACKAGE_NAME }}-armeabi-v7a.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/${{ env.PACKAGE_NAME }}-armeabi-v7a-Signed.apk
 
     - name: Publish x86_64 APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp-x86_64.apk
-        path: TimetableApp/TimetableApp.Droid/bin/Release/*x86_64-Signed.apk
+        name: ${{ env.PACKAGE_NAME }}-x86_64.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/${{ env.PACKAGE_NAME }}-x86_64-Signed.apk
 
     - name: Publish x86 APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp-x86.apk
-        path: TimetableApp/TimetableApp.Droid/bin/Release/*x86-Signed.apk
+        name: ${{ env.PACKAGE_NAME }}-x86.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/${{ env.PACKAGE_NAME }}-x86-Signed.apk
 
     - name: Publish multiarch APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp.apk
-        path: TimetableApp/TimetableApp.Droid/bin/Release/TimetableApp.TimetableApp-Signed.apk
+        name: ${{ env.PACKAGE_NAME }}.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/${{ env.PACKAGE_NAME }}-Signed.apk
