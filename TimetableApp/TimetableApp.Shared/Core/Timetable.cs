@@ -97,9 +97,12 @@ namespace TimetableApp.Core
         #endregion
 
         #region File operations
-        public async Task<bool> UpdateAsync()
+        public async Task<string> UpdateAsync()
         {
-            if (string.IsNullOrEmpty(UpdateURL)) return false;
+            if (string.IsNullOrEmpty(UpdateURL))
+            {
+                return "Bad update URL";
+            }
 
             try
             {
@@ -134,7 +137,7 @@ namespace TimetableApp.Core
                             var hashString = string.Concat(hash.Select(x => x.ToString("X2")));
                             if (string.Compare(newSha512, hashString, true) != 0)
                             {
-                                return false;
+                                return "Bad hash";
                             }
                             using (var timetableStream = new MemoryStream(data))
                             using (var timetableReader = new StreamReader(timetableStream))
@@ -146,7 +149,7 @@ namespace TimetableApp.Core
                                     new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
                             }
                         }
-                        else return true;
+                        else return null;
                     }
                 }
 
@@ -166,14 +169,14 @@ namespace TimetableApp.Core
 
                 SaveAsync();
 
-                return true;
+                return null;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
                 Console.WriteLine(e.ToString());
                 //throw;
-                return false;
+                return e.ToString();
             }
         }   
 

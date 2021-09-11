@@ -100,25 +100,24 @@ namespace TimetableApp
                 System.Diagnostics.Debug.WriteLine(Data.Timetable.UpdateURL);
 
                 string response = null;
-                await SingMeToSleepAsync();
-                if (!await Data.Timetable.UpdateAsync())
+                var result = await Data.Timetable.UpdateAsync();
+                if (result != null)
                 {
                     Data.Timetable.UpdateURL = oldLocation;
-                    response = "Timetable failed to load.";
+                    response = $"Timetable failed to load: {result}";
                 }
                 else response = "Timetable successfully loaded.";
 
                 var message = new MessageDialog(response);
-                await SingMeToSleepAsync();
                 await message.ShowAsync();
             }
         }
 
         private async void Sync_Tapped(object sender, TappedRoutedEventArgs args)
         {
-            bool succeeded = await Data.Timetable.UpdateAsync();
+            var result = await Data.Timetable.UpdateAsync();
             var dialog = new MessageDialog(
-                succeeded ? "Timetable successfully updated" : "Timetable update failed.", 
+                (result == null) ? "Timetable successfully updated" : $"Timetable update failed: {result}", 
                 "Update timetable");
             await dialog.ShowAsync();
         }
@@ -134,11 +133,5 @@ namespace TimetableApp
             await Launcher.LaunchUriAsync(new Uri("https://github.com/AzureAms/TimetableApp.Uno/issues"));
         }
         #endregion
-
-        private async Task SingMeToSleepAsync()
-        {
-            System.Diagnostics.Debug.WriteLine("Sing me to sleep now!");
-            await Task.Run(() => Thread.Sleep(1));
-        }
     }
 }
