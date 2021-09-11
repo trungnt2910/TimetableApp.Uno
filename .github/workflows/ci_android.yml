@@ -41,8 +41,32 @@ jobs:
     - name: Build
       run: msbuild TimetableApp/TimetableApp.Droid/TimetableApp.Droid.csproj /t:PackageForAndroid /p:Configuration=Release
 
-    - name: Publish apks
+    - name: Publish arm64 APK
       uses: actions/upload-artifact@v2
       with:
-        name: TimetableApp.Droid
-        path: TimetableApp/TimetableApp.Droid/bin/Release/*.apk
+        name: TimetableApp-arm64-v8a.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/*arm64-v8a-Signed.apk
+
+    - name: Publish arm APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: TimetableApp-armeabi-v7a.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/*armeabi-v7a-Signed.apk
+
+    - name: Publish x86_64 APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: TimetableApp-x86_64.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/*x86_64-Signed.apk
+
+    - name: Publish x86 APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: TimetableApp-x86.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/*x86-Signed.apk
+
+    - name: Publish multiarch APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: TimetableApp.apk
+        path: TimetableApp/TimetableApp.Droid/bin/Release/TimetableApp.TimetableApp-Signed.apk
