@@ -1,0 +1,51 @@
+name: 'Build and publish UWP packages'
+on:
+  create:
+    branches:
+      - release/**
+  push:
+    branches:
+    - master
+    - dev/**
+    paths:
+    - TimetableApp/TimetableApp.UWP/**
+    - TimetableApp/TimetableApp.Shared/**
+    - .github/workflows/**
+  pull_request:
+    branches:
+    - master
+    paths:
+    - TimetableApp/TimetableApp.UWP/**
+    - TimetableApp/TimetableApp.Shared/**
+    - .github/workflows/**
+
+jobs:
+  build:
+    name: Build app (UWP)
+    runs-on: windows-latest
+    steps:
+        # Checkout the code
+        - uses: actions/checkout@v2
+
+        - name: Setup MSBuild
+          uses: microsoft/setup-msbuild@v1.0.2
+
+        - name: Generate Certificate
+          run: |
+            $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.PFX_BASE64 }}")
+            $currentDirectory = Get-Location
+            $certificatePath = Join-Path -Path $currentDirectory -ChildPath "TimetableApp/TimetableApp.UWP" -AdditionalChildPath "TimetableApp.UWP_TemporaryKey.pfx"
+            [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          shell: pwsh
+
+        - name: Build UWP application
+          run: msbuild TimetableApp/TimetableApp.UWP /p:AppxBundle=Always /p:AppxBundlePlatforms="x86|x64|ARM|ARM64" /p:AppxPackageDir=AppPackages /p:PackageCertificateKeyFile=TimetableApp.Uwp_temporarykey.pfx /restore /p:Configuration=Release /p:PackageCertificatePassword="${{ secrets.PFX_PASSWORD }}"
+          shell: cmd
+
+        - name: Publish appx bundle
+          uses: actions/upload-artifact@v2
+          with:
+            name: TimetableApp.UWP
+            path: |
+              TimetableApp/TimetableApp.UWP/AppPackages/TimetableApp.UWP_0.1.0.0_Test/TimetableApp.UWP_0.1.0.0_x86_x64_ARM_ARM64.appxbundle
+              TimetableApp/TimetableApp.UWP/AppPackages/TimetableApp.UWP_0.1.0.0_Test/TimetableApp.UWP_0.1.0.0_x86_x64_ARM_ARM64.cer
