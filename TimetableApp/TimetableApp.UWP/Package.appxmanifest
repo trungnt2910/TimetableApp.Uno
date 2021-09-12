@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="170b71de-3996-4c00-a581-45463bf452c1"
-    Publisher="CN=Trung"
-    Version="1.0.0.0" />
+    Name="com.AzureAms.TimetableApp"
+    Publisher="CN=AzureAms Programming Club"
+    Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="006e17f2-cdcf-46e3-a894-68139316d975" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TimetableApp</DisplayName>
-    <PublisherDisplayName>TimetableApp</PublisherDisplayName>
+    <PublisherDisplayName>AzureAms Programming Club</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -39,6 +39,11 @@
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
